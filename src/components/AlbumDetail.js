@@ -25,7 +25,6 @@ const AlbumDetail = ({navigation, title, albumId}) => {
   );
 };
 
-
 const styles = {
   headerContentStyle: {
     flexDirection: 'row',
