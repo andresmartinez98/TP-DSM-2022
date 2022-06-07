@@ -1,62 +1,79 @@
-import React from 'react';
-import {Text, View, Image, Linking} from 'react-native';
-import Card from './Card';
-import CardSection from './CardSection';
-import Button from './Button';
+import React from "react";
+import {
+  Text,
+  View,
+  Image,
+  Linking,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
+import Card from "./Card";
+import CardSection from "./CardSection";
+import Button from "./Button";
 
-const PhotoDetail = ({title, imageUrl}) => {
-  const {
-    thumbnailStyle,
-    headerContentStyle,
-    thumbnailContainerStyle,
-    headerTextStyle,
-    imageStyle,
-  } = styles;
+import { LinearGradient } from "expo-linear-gradient";
+
+const PhotoDetail = ({ navigation, title, imageUrl }) => {
+  const { headerTextStyle, imageStyle, gradient, imageSection } = styles;
 
   return (
     <Card>
-      <CardSection>
-        <View style={thumbnailContainerStyle}>
-          <Image style={thumbnailStyle} source={{uri: imageUrl}} />
-        </View>
-        <View style={headerContentStyle}>
-          <Text style={headerTextStyle}>{title}</Text>
-        </View>
-      </CardSection>
-
-      <CardSection>
-        <Image style={imageStyle} source={{uri: imageUrl}} />
-      </CardSection>
-
-      <CardSection>
-        <Button onPress={() => Linking.openURL(imageUrl)}>See Now!</Button>
-      </CardSection>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() =>
+          navigation.navigate("viewImage", { imageUrl: imageUrl, title: title })
+        }
+      >
+        <CardSection style={imageSection}>
+          <ImageBackground
+            borderRadius={15}
+            style={imageStyle}
+            source={{ uri: imageUrl }}
+          >
+            <LinearGradient
+              // Background Linear Gradient
+              colors={[
+                "rgba(255, 255, 255, 0)",
+                "rgba(255, 255, 255, 0)",
+                "rgba(0, 0, 0, 0.2)",
+                "rgba(0, 0, 0, 0.812)",
+              ]}
+              style={gradient}
+            ></LinearGradient>
+            <Text style={headerTextStyle} numberOfLines={1}>
+              {title}
+            </Text>
+          </ImageBackground>
+        </CardSection>
+      </TouchableOpacity>
     </Card>
   );
 };
 
 const styles = {
-  headerContentStyle: {
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-  },
   headerTextStyle: {
+    position: "absolute",
+    bottom: 5,
+    alignSelf: "center",
     fontSize: 18,
+    color: "#fff",
+    marginHorizontal: 7,
   },
-  thumbnailStyle: {
-    height: 50,
-    width: 50,
-  },
-  thumbnailContainerStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 10,
-    marginRight: 10,
+
+  imageSection: {
+    borderRadius: 15,
+    overflow: "hidden",
   },
   imageStyle: {
+    height: 250,
+    flex: 1,
+    width: null,
+  },
+  gradient: {
     height: 300,
     flex: 1,
     width: null,
+    borderRadius: 15,
   },
 };
 
