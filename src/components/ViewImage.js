@@ -1,12 +1,8 @@
-import React, { useEffect } from "react";
-import { View, Image, Text, ScrollView, Linking } from "react-native";
+import React from "react";
+import { View, Image, Text, Linking } from "react-native";
 import Button from "./Button";
 
 const ViewImage = (props) => {
-  //   useEffect(() => {
-  //     console.log(props);
-  //   }, []);
-
   const { imageStyle, container, headerTextStyle } = styles;
   const { imageUrl, title } = props.route.params;
   return (
@@ -14,15 +10,11 @@ const ViewImage = (props) => {
       <Image
         style={imageStyle}
         resizeMode="contain"
-        source={{
-          uri: imageUrl,
-        }}
+        source={{ uri: imageUrl }}
       />
-      {/* <Button onPress={() => Linking.openURL(imageUrl)}>See Now!</Button> */}
-
-      <Text style={headerTextStyle} numberOfLines={1}>
+      <Button style={headerTextStyle} onPress={() => Linking.openURL(imageUrl)}>
         {title}
-      </Text>
+      </Button>
     </View>
   );
 };
@@ -34,13 +26,6 @@ const styles = {
   },
   imageStyle: {
     flex: 1,
-  },
-  headerTextStyle: {
-    position: "absolute",
-    bottom: 5,
-    alignSelf: "center",
-    fontSize: 18,
-    color: "#fff",
   },
 };
 export default ViewImage;
